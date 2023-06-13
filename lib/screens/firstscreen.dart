@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/services.dart';
 
 class FirstScreen extends StatefulWidget {
   const FirstScreen({super.key});
@@ -23,78 +24,77 @@ class _FirstScreenState extends State<FirstScreen> {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
 
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: CarouselSlider(
-        options: CarouselOptions(
-          height: screenHeight, // Adjust the height as per your requirement
-          autoPlay: true,
-          viewportFraction: 1.1,
-          aspectRatio:
-              16 / 9, // Adjust the aspect ratio as per your requirement
-          autoPlayCurve: Curves.fastOutSlowIn,
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: SystemUiOverlay.values);
 
-          onPageChanged: (index, reason) {
-            setState(() {
-              currentIndex = index;
-            });
-          },
-          padEnds: true,
-        ),
-        items: images.map((imageURL) {
-          return Builder(
-            builder: (BuildContext context) {
-              return Stack(
-                children: [
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height,
-                    margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                    child: Image.asset(
-                      imageURL,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  Positioned(
-                      bottom: 0,
-                      child: Padding(
-                        padding: EdgeInsets.fromLTRB(screenWidth * 0.33, 0,
-                            screenWidth * 0.33, screenHeight * 0.01),
-                        child: const Row(
-                          children: [
-                            Icon(
-                              Icons.circle,
-                              color: Colors.white,
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Icon(
-                              Icons.circle,
-                              color: Colors.white,
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Icon(
-                              Icons.circle,
-                              color: Colors.white,
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Icon(
-                              Icons.circle,
-                              color: Colors.white,
-                            ),
-                          ],
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: screenWidth * 0.05, vertical: screenHeight * 0.05),
+            child: CarouselSlider(
+              options: CarouselOptions(
+                height: screenHeight *
+                    0.65, // Adjust the height as per your requirement
+                autoPlay: true,
+                viewportFraction: 1.1,
+                aspectRatio:
+                    16 / 9, // Adjust the aspect ratio as per your requirement
+                autoPlayCurve: Curves.fastOutSlowIn,
+
+                onPageChanged: (index, reason) {
+                  setState(() {
+                    currentIndex = index;
+                  });
+                },
+                padEnds: true,
+              ),
+              items: images.map((imageURL) {
+                return Builder(
+                  builder: (BuildContext context) {
+                    return Container(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      width: MediaQuery.of(context).size.width,
+                      margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(30),
+                        child: Image.asset(
+                          imageURL,
+                          fit: BoxFit.cover,
                         ),
-                      ))
+                      ),
+                    );
+                  },
+                );
+              }).toList(),
+            ),
+          ),
+          Center(
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.shade400.withOpacity(0.5),
+                    spreadRadius: 5,
+                    blurRadius: 5,
+                    offset: Offset(0, 3),
+                  ),
                 ],
-              );
-            },
-          );
-        }).toList(),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Icon(
+                  Icons.arrow_forward_rounded,
+                  size: 40,
+                ),
+              ),
+            ),
+          )
+        ],
       ),
     );
   }
