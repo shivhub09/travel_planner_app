@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 class FirstScreen extends StatefulWidget {
   const FirstScreen({super.key});
 
@@ -74,12 +75,12 @@ class _FirstScreenState extends State<FirstScreen> {
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.065),
-            child: const Row(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
                   "Travel ",
-                  style: GoogleFonts(),
+                  style: GoogleFonts.average(),
                 ),
                 Text(
                   "Anywhere ",
