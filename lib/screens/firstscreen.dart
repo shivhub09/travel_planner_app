@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/services.dart';
-
+import 'package:google_fonts/google_fonts.dart';
 class FirstScreen extends StatefulWidget {
   const FirstScreen({super.key});
 
@@ -11,10 +11,10 @@ class FirstScreen extends StatefulWidget {
 
 class _FirstScreenState extends State<FirstScreen> {
   int currentIndex = 0;
-
+  CarouselController buttonCarouselController = CarouselController();
   List<String> images = [
     "assets/images_app/alps.jpg",
-    "assets/images_app/paris.jpg",
+    "assets/images_app/paris2.jpg",
     "assets/images_app/china.jpg",
     "assets/images_app/taj.jpg",
   ];
@@ -27,26 +27,26 @@ class _FirstScreenState extends State<FirstScreen> {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
         overlays: SystemUiOverlay.values);
 
+    int activeIndex = 0;
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
         children: [
           Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: screenWidth * 0.05, vertical: screenHeight * 0.05),
+            padding: EdgeInsets.only(
+                left: screenWidth * 0.05,
+                right: screenWidth * 0.05,
+                top: screenHeight * 0.05),
             child: CarouselSlider(
               options: CarouselOptions(
-                height: screenHeight *
-                    0.65, // Adjust the height as per your requirement
-                autoPlay: true,
+                height: screenHeight * 0.65,
+                autoPlay: false,
                 viewportFraction: 1.1,
-                aspectRatio:
-                    16 / 9, // Adjust the aspect ratio as per your requirement
+                aspectRatio: 16 / 9,
                 autoPlayCurve: Curves.fastOutSlowIn,
-
                 onPageChanged: (index, reason) {
                   setState(() {
-                    currentIndex = index;
+                    activeIndex = index;
                   });
                 },
                 padEnds: true,
@@ -57,7 +57,8 @@ class _FirstScreenState extends State<FirstScreen> {
                     return Container(
                       padding: EdgeInsets.symmetric(horizontal: 20),
                       width: MediaQuery.of(context).size.width,
-                      margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                      margin:
+                          const EdgeInsets.only(left: 5.0, right: 5.0, top: 10),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(30),
                         child: Image.asset(
@@ -69,6 +70,21 @@ class _FirstScreenState extends State<FirstScreen> {
                   },
                 );
               }).toList(),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.065),
+            child: const Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  "Travel ",
+                  style: GoogleFonts(),
+                ),
+                Text(
+                  "Anywhere ",
+                ),
+              ],
             ),
           ),
           Center(
